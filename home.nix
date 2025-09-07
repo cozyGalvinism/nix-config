@@ -34,6 +34,8 @@
     '';
     plugins = [
       { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
+      { name = "z"; src = pkgs.fishPlugins.z.src; }
+      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
     ];
   };
 
