@@ -40,7 +40,7 @@
   };
 
   programs.vesktop = {
-    enable =
+    enable = true;
   };
 
   programs.starship = {
