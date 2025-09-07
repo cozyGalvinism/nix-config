@@ -32,6 +32,9 @@
       set -x GPG_TTY (tty)
       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
     '';
+    plugins = [
+      { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
+    ];
   };
 
   programs.starship = {
@@ -78,7 +81,9 @@
       key = "0x958546AA073FAA66";
       signByDefault = true;
     };
-    defaultBranch = "develop";
+    extraConfig = {
+      init.defaultBranch = "develop";
+    };
   };
 
   programs.gpg = {
