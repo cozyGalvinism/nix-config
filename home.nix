@@ -39,6 +39,10 @@
     ];
   };
 
+  programs.vesktop = {
+    enable =
+  };
+
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
