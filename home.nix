@@ -19,6 +19,7 @@
     windsurf
     procps
     starship
+    vesktop
   ];
 
   fonts.fontconfig.enable = true;
