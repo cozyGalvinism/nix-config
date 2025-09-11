@@ -62,7 +62,8 @@
 
   user = {
     name = "cozygalvinism";
-    description = "Default User";
+    # description = real name... laaaaaame
+    description = "cozyGalvinism";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       gnupg
