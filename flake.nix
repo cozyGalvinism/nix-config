@@ -15,16 +15,19 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, agenix, xrdriver, ... }: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {
-        inherit inputs;
-        system = "x86_64-linux";
-      };
-      modules = [
-        ./configuration.nix
+  outputs = inputs@{ nixpkgs, home-manager, agenix, xrdriver, ... }:
+  let
+    system = "x86_64-linux";
+    lib = nixpkgs.lib;
+    commonArgs = {
+      inherit system inputs;
+    };
 
+    mkHost = hostName: extraModules: lib.nixosSystem {
+      inherit system;
+      specialArgs = commonArgs // { hostName = hostName;};
+      modules = [
+        ./hosts/${hostName}
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -35,9 +38,12 @@
             ];
           };
         }
-
         agenix.nixosModules.default
-      ];
+      ] ++ extraModules;
+    };
+  in {
+    nixosConfigurations = {
+      nixos = mkHost "nixos" [];
     };
   };
 }
