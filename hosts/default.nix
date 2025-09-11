@@ -7,6 +7,7 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
+    gnome-keyring
     git
     inputs.agenix.packages."${pkgs.system}".default
     inputs.xrdriver.packages."${pkgs.system}".default
@@ -42,6 +43,7 @@
 
   services.gnome = {
     games.enable = false;
+    gnome-keyring.enable = true;
   };
 
   services.printing.enable = true;
