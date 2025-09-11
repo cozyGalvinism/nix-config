@@ -16,7 +16,7 @@
   home.packages = with pkgs; [
     gnome-tweaks
     kitty
-    windsurf
+    unstable.windsurf
     procps
     starship
     vesktop

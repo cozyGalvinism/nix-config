@@ -3,6 +3,7 @@
   
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +16,7 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, agenix, xrdriver, ... }:
+  outputs = inputs@{ nixpkgs, unstable, home-manager, agenix, xrdriver, ... }:
   let
     system = "x86_64-linux";
     lib = nixpkgs.lib;
