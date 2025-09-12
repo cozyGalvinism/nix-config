@@ -19,6 +19,10 @@
     inputs.xrdriver.packages."${pkgs.system}".default
   ];
 
+  nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+  ];
+
   networking.networkmanager.enable = true;
 
   user = {

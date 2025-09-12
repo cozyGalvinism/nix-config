@@ -14,9 +14,12 @@
     xrdriver = {
       url = "github:shymega/XRLinuxDriver/shymega/nix-flake-support";
     };
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+    };
   };
 
-  outputs = inputs@{ nixpkgs, unstable, home-manager, agenix, xrdriver, ... }:
+  outputs = inputs@{ nixpkgs, unstable, nix-vscode-extensions, home-manager, agenix, xrdriver, ... }:
   let
     system = "x86_64-linux";
     lib = nixpkgs.lib;
