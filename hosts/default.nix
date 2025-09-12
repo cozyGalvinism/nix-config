@@ -17,6 +17,7 @@
     git
     inputs.agenix.packages."${pkgs.system}".default
     inputs.xrdriver.packages."${pkgs.system}".default
+    python313
   ];
 
   nixpkgs.overlays = [
@@ -49,6 +50,14 @@
 
   # Programs
   programs.firefox.enable = true;
+
+  programs.evolution = {
+    enable = true;
+    plugins = [
+      pkgs.evolution-ews
+    ];
+  };
+  services.gnome.evolution-data-server.enable = true;
 
   # Secrets
   age.secrets = {
