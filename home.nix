@@ -75,6 +75,14 @@ in {
           openvsx.rust-lang.rust
         ];
       };
+
+      odoo = mkProfile {
+        extraExtensions = with openvsx; [
+          ms-python.python
+          magicstack.magicpython
+          codeium.windsurfpyright
+        ];
+      };
     };
   };
 
