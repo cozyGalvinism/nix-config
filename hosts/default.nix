@@ -29,7 +29,7 @@
     name = "cozygalvinism";
     # description = real name... laaaaaame
     description = "cozyGalvinism";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       gnupg
       pinentry-gnome3
