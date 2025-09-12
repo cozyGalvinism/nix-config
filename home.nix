@@ -24,6 +24,10 @@ let
     profileAssociations = { };
   };
 in {
+  imports = [
+    ./home
+  ];
+
   home.username = "cozygalvinism";
   home.homeDirectory = "/home/cozygalvinism";
 
@@ -49,19 +53,6 @@ in {
   fonts.fontconfig.enable = true;
 
   services.ssh-agent.enable = false;
-
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set -e SSH_AGENT_PID
-      set -x GPG_TTY (tty)
-      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-    '';
-    plugins = [
-      { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
-      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
-    ];
-  };
 
   programs.vscode = {
     enable = true;

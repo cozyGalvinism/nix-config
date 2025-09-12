@@ -6,7 +6,7 @@ let
   defaultUser = {
     name = "cozygalvinism";
     description = "Default User";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       git
       gnupg
