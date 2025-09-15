@@ -20,6 +20,8 @@
     python313
     rustup
     gcc
+    age
+    age-plugin-yubikey
   ];
 
   nixpkgs.overlays = [
