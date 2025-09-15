@@ -28,6 +28,8 @@
     spotify
     teams-for-linux
     libreoffice
+    pre-commit
+    bun
   ];
 
   fonts.fontconfig.enable = true;
