@@ -148,5 +148,11 @@
     };
   };
 
+  age = {
+    identityPaths = [
+      "/var/lib/age-identities/yubikey.txt"
+    ];
+  };
+
   home.stateVersion = "25.05";
 }

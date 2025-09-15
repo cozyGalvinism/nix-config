@@ -1,6 +1,22 @@
 { config, pkgs, lib, inputs, hostName, ... }:
 
-{
+let
+  yubikeyIdentity = "/var/lib/age-identities/yubikey.txt";
+  exe = lib.getExe pkgs.age-plugin-yubikey;
+
+  genScript = pkgs.writeShellScript "yubikey-age-identity.sh" ''
+    set -euo pipefail
+    install -d -m 0755 /var/lib/age-identities
+
+    # Try to read the identity descriptor from the YubiKey
+    if ${exe} -i > /tmp/yubi.id 2> /tmp/yubi.err; then
+      install -m 0444 -o root -g root /tmp/yubi.id ${yubikeyIdentity}
+    else
+      echo "[yubikey-age-identity] age-plugin-yubikey failed; keeping previous identity if any"
+      [ -s ${yubikeyIdentity} ] || exit 0
+    fi
+  '';
+in {
   imports = [
     ../modules
   ];
@@ -63,20 +79,43 @@
   };
   services.gnome.evolution-data-server.enable = true;
 
-  # Secrets
-  age.secrets = {
-    "BONM.key" = {
-      file = ../secrets/BONM.key.age;
-      owner = "root";
-      group = "root";
-      mode = "0400";
-    };
+  systemd.tmpfiles.rules = [
+    "d /var/lib/age-identities 0700 root root -"
+  ];
 
-    "BONM.userpass" = {
-      file = ../secrets/BONM.userpass.age;
-      owner = "root";
-      group = "root";
-      mode = "0400";
+  systemd.services."yubikey-age-identity" = {
+    description = "Generate age identity from YubiKey";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "pcscd.service" "smartcard.target" ];
+    requires = [ "pcscd.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = genScript;
+    };
+  };
+
+  # Secrets
+  age = {
+    ageBin = "PATH=${pkgs.age-plugin-yubikey}/bin:$PATH ${pkgs.age}/bin/age";
+    identityPaths = [
+      yubikeyIdentity
+    ] ++ map (e: e.path) (
+      lib.filter (e: e.type == "rsa" || e.type == "ed25519") config.services.openssh.hostKeys
+    );
+    secrets = {
+      "BONM.key" = {
+        file = ../secrets/BONM.key.age;
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+
+      "BONM.userpass" = {
+        file = ../secrets/BONM.userpass.age;
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
     };
   };
 
