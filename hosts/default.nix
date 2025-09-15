@@ -19,6 +19,7 @@
     inputs.xrdriver.packages."${pkgs.system}".default
     python313
     rustup
+    gcc
   ];
 
   nixpkgs.overlays = [
