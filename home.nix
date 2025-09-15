@@ -30,6 +30,7 @@
     libreoffice
     pre-commit
     bun
+    deadbeef
   ];
 
   fonts.fontconfig.enable = true;
