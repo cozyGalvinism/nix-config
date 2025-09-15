@@ -12,8 +12,10 @@ let
     "workbench.welcomePage.walkthroughs.openOnInstall" = false;
   };
 
-  mkProfile = { extraExtensions ? [ ], extraSettings ? { }, extraAttrs ? { } } : {
+  mkProfile = { extraExtensions ? [ ], extraSettings ? { }, extraAttrs ? { }, writeSettings ? true } : {
     extensions = commonExtensions ++ extraExtensions;
+  }
+  // lib.optionalAttrs writeSettings {
     userSettings = commonSettings // extraSettings;
   } // extraAttrs;
 
@@ -23,7 +25,30 @@ let
     lastActiveProfile = "default";
     profileAssociations = { };
   };
+
+  profileBaseSettings = {
+    rust = commonSettings // { };
+  };
+
+  profileSecretInjections = [
+    {
+      profile = "rust";
+      items = [
+        { key = "codestats.apikey"; secret = "codestats.apikey"; }
+        { key = "wakatime.apiKey"; secret = "wakatime.apikey"; }
+      ];
+    }
+  ];
 in {
+  age.secrets = {
+    "codestats.apikey" = {
+      file = ../secrets/codestats.apikey.age;
+    };
+    "wakatime.apikey" = {
+      file = ../secrets/wakatime.apikey.age;
+    };
+  };
+
   programs.vscode = {
     enable = true;
     package = pkgs.unstable.windsurf;
@@ -41,8 +66,15 @@ in {
       };
 
       rust = mkProfile {
-        extraExtensions = [
-          openvsx.rust-lang.rust
+        writeSettings = false;
+        extraExtensions = with openvsx; [
+          rust-lang.rust-analyzer
+          tamasfe.even-better-toml
+          fill-labs.dependi
+          gruntfuggly.todo-tree
+          wayou.vscode-todo-highlight
+          wakatime.vscode-wakatime
+          codestats.code-stats-vscode
         ];
       };
 
@@ -69,4 +101,32 @@ ${profilesRegistry}
 JSON
     fi
   '';
+
+  home.activation.injectWindsurfSecrets = lib.hm.dag.entryAfter [ "seedWindsurfProfiles" ] (
+    let
+      mkSnippet = inj: ''
+        profiles_dir="$HOME/.config/Windsurf/User/profiles"
+        settings="$profiles_dir/${inj.profile}/settings.json"
+        mkdir -p "$(dirname "$settings")"
+        tmp_file="$(mktemp)"
+        # Start from the Nix-defined base settings for this profile (or empty)
+        cat > "$tmp_file" <<'JSON'
+${builtins.toJSON (profileBaseSettings.${inj.profile} or {})}
+JSON
+'' + (lib.concatStringsSep "\n" (map (it: ''
+        if [ -r "${config.age.secrets.${it.secret}.path}" ]; then
+          val="$(tr -d '\n' < "${config.age.secrets.${it.secret}.path}")"
+          new_file="$(mktemp)"
+          ${pkgs.jq}/bin/jq --arg v "$val" '. + {"${it.key}": $v}' "$tmp_file" > "$new_file"
+          mv "$new_file" "$tmp_file"
+        fi
+'' ) inj.items)) + ''
+        chmod 600 "$tmp_file"
+        mv "$tmp_file" "$settings"
+'';
+    in
+      ''
+        set -eu
+      '' + (lib.concatStringsSep "\n" (map mkSnippet profileSecretInjections))
+  );
 }

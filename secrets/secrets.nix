@@ -4,4 +4,6 @@ let
 in {
   "BONM.key.age".publicKeys = systems;
   "BONM.userpass.age".publicKeys = systems;
+  "codestats.apikey.age".publicKeys = systems;
+  "wakatime.apikey.age".publicKeys = systems;
 }
