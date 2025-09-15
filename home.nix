@@ -30,6 +30,7 @@
     libreoffice
     pre-commit
     bun
+    modejs
     deadbeef
   ];
 
