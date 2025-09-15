@@ -18,6 +18,7 @@
     inputs.agenix.packages."${pkgs.system}".default
     inputs.xrdriver.packages."${pkgs.system}".default
     python313
+    rustup
   ];
 
   nixpkgs.overlays = [
