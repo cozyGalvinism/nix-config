@@ -26,12 +26,27 @@
     commonArgs = {
       inherit system inputs;
     };
+    defaultOverlays = import ./overlays;
 
     mkHost = hostName: extraModules: lib.nixosSystem {
       inherit system;
       specialArgs = commonArgs // { hostName = hostName;};
       modules = [
         ./hosts/${hostName}
+
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [
+            defaultOverlays
+            nix-vscode-extensions.overlays.default
+            (final: prev: {
+              unstable = import inputs.unstable {
+                system = prev.stdenv.hostPlatform.system;
+                config = prev.config;
+              };
+            })
+          ];
+        })
+
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

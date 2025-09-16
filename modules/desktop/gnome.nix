@@ -40,15 +40,5 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-
-    nixpkgs.overlays = [
-      (final: prev: {
-        gnome-keyring = prev.gnome-keyring.overrideAttrs (oldAttrs: {
-          mesonFlags = (lib.filter (flag: flag != "-Dssh-agent=true") oldAttrs.mesonFlags) ++ [
-            "-Dssh-agent=false"
-          ];
-        });
-      })
-    ];
   };
 }

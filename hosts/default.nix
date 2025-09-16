@@ -38,10 +38,7 @@ in {
     gcc
     age
     age-plugin-yubikey
-  ];
-
-  nixpkgs.overlays = [
-    inputs.nix-vscode-extensions.overlays.default
+    polychromatic
   ];
 
   networking.networkmanager.enable = true;
@@ -78,6 +75,12 @@ in {
     ];
   };
   services.gnome.evolution-data-server.enable = true;
+
+  hardware.openrazer = {
+    enable = true;
+    users = [ "cozygalvinism" ];
+    syncEffectsEnabled = true;
+  };
 
   systemd.tmpfiles.rules = [
     "d /var/lib/age-identities 0700 root root -"
