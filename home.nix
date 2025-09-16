@@ -36,8 +36,6 @@
 
   fonts.fontconfig.enable = true;
 
-  services.ssh-agent.enable = false;
-
   programs.vesktop = {
     enable = true;
   };
@@ -56,19 +54,6 @@
         exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
       fi
     '';
-  };
-
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "github.com" = {
-        user = "git";
-      };
-
-      "git.hadron.eu.com" = {
-        user = "git";
-      };
-    };
   };
 
   programs.kitty = {
