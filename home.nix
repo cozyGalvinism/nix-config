@@ -34,8 +34,6 @@
     deadbeef
   ];
 
-  programs.home-manager.enable = true;
-
   fonts.fontconfig.enable = true;
 
   programs.vesktop = {
@@ -152,7 +150,7 @@
 
   age = {
     identityPaths = [
-      "/var/lib/age-identities/yubikey.txt"
+      "${config.home.homeDirectory}/.ssh/id_ed25519"
     ];
   };
 

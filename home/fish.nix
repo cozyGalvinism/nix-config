@@ -6,6 +6,12 @@
       set -x GPG_TTY (tty)
       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
     '';
+
+    shellAliases = {
+      hm = "home-manager";
+    };
+    generateCompletions = true;
+
     plugins = [
       { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
       { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }

@@ -33,12 +33,11 @@
         ./home.nix
         inputs.agenix.homeManagerModules.default
       ];
-      programs.home-manager.enable = true;
-      home.packages = [ pkgs.home-manager ];
     };
 
     hmPkgs = import nixpkgs {
       inherit system;
+      config.allowUnfree = true;
       overlays = [
         defaultOverlays
         nix-vscode-extensions.overlays.default
