@@ -61,7 +61,7 @@ in {
     name = "cozygalvinism";
     # description = real name... laaaaaame
     description = "cozyGalvinism";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "plugdev" ];
     packages = with pkgs; [
       gnupg
       pinentry-gnome3

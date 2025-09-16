@@ -10,6 +10,8 @@ let
     "workbench.startupEditor" = "none";
     "workbench.welcomePage.enabled" = false;
     "workbench.welcomePage.walkthroughs.openOnInstall" = false;
+    "editor.fontFamily" = "CaskaydiaCove Nerd Font";
+    "editor.fontSize" = 12;
   };
 
   mkProfile = { extraExtensions ? [ ], extraSettings ? { }, extraAttrs ? { }, writeSettings ? true } : {
