@@ -106,6 +106,13 @@ in {
       lib.filter (e: e.type == "rsa" || e.type == "ed25519") config.services.openssh.hostKeys
     );
     secrets = {
+      "BONM.ovpn" = {
+        file = ../secrets/BONM.ovpn.age;
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+
       "BONM.key" = {
         file = ../secrets/BONM.key.age;
         owner = "root";
@@ -126,11 +133,10 @@ in {
   environment.etc = {
     "openvpn/ca.crt".source = ../openvpn/ca.crt;
     "openvpn/client.crt".source = ../openvpn/client.crt;
-    "openvpn/BONM.conf".source = ../openvpn/BONM.ovpn;
   };
 
   services.openvpn.servers.BONM = {
     autoStart = false;
-    config = "config /etc/openvpn/BONM.conf";
+    config = "config ${config.age.secrets."BONM.ovpn".path}";
   };
 }

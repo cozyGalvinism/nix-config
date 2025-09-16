@@ -10,6 +10,7 @@ let
 in {
   "BONM.key.age".publicKeys = [ machines.nixtop users.minikey users.bigkey ];
   "BONM.userpass.age".publicKeys = [ machines.nixtop users.minikey users.bigkey ];
+  "BONM.ovpn.age".publicKeys = [ machines.nixtop users.minikey users.bigkey ];
   "codestats.apikey.age".publicKeys = [ machines.nixtop users.minikey users.bigkey ];
   "wakatime.apikey.age".publicKeys = [ machines.nixtop users.minikey users.bigkey ];
 }
