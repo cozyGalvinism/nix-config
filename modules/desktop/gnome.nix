@@ -22,6 +22,8 @@ in {
 
     environment.systemPackages = with pkgs; [
       gnomeExtensions.appindicator
+      gnomeExtensions.dash-to-dock
+      gnomeExtensions.gsconnect
     ];
 
     services.gnome = {

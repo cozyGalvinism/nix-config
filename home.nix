@@ -136,7 +136,14 @@
       disable-user-extensions = false;
       enabled-extensions = with pkgs.gnomeExtensions; [
         appindicator.extensionUuid
+        dash-to-dock.extensionUuid
+        gsconnect.extensionUuid
       ];
+    };
+
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      dock-position = "LEFT";
+      multi-monitor = true;
     };
   };
 

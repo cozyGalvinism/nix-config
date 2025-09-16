@@ -42,6 +42,20 @@ in {
   ];
 
   networking.networkmanager.enable = true;
+  networking.firewall = {
+    enable = true;
+    allowPing = true;
+    allowedTCPPorts = [
+      22 # SSH
+    ];
+    allowedTCPPortRanges = [
+      { from = 1714; to = 1764; } # KDE Connect/GSConnect
+    ];
+
+    allowedUDPPortRanges = [
+      { from = 1714; to = 1764; } # KDE Connect/GSConnect
+    ];
+  };
 
   user = {
     name = "cozygalvinism";
