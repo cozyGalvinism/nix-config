@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = config.cozyConfig.desktop.gnome;
-
 in {
   options.cozyConfig.desktop.gnome = {
     enable = mkEnableOption "Enable GNOME desktop environment";
@@ -20,6 +19,10 @@ in {
         variant = "nodeadkeys";
       };
     };
+
+    environment.systemPackages = with pkgs; [
+      gnomeExtensions.appindicator
+    ];
 
     services.gnome = {
       games.enable = false;

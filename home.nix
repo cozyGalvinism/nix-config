@@ -131,6 +131,13 @@
       command = "kitty";
       binding = "<Primary><Alt>T";
     };
+
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        appindicator.extensionUuid
+      ];
+    };
   };
 
   age = {
