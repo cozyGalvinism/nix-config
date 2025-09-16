@@ -28,6 +28,29 @@
     };
     defaultOverlays = import ./overlays;
 
+    hmCommon = { pkgs, ... }: {
+      imports = [
+        ./home.nix
+        inputs.agenix.homeManagerModules.default
+      ];
+      programs.home-manager.enable = true;
+      home.packages = [ pkgs.home-manager ];
+    };
+
+    hmPkgs = import nixpkgs {
+      inherit system;
+      overlays = [
+        defaultOverlays
+        nix-vscode-extensions.overlays.default
+        (final: prev: {
+          unstable = import inputs.unstable {
+            system = prev.stdenv.hostPlatform.system;
+            config = prev.config;
+          };
+        })
+      ];
+    };
+
     mkHost = hostName: extraModules: lib.nixosSystem {
       inherit system;
       specialArgs = commonArgs // { hostName = hostName;};
@@ -50,12 +73,7 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.cozygalvinism = { ... }: {
-            imports = [
-              ./home.nix
-              inputs.agenix.homeManagerModules.default
-            ];
-          };
+          home-manager.users.cozygalvinism = hmCommon;
         }
         agenix.nixosModules.default
       ] ++ extraModules;
@@ -63,6 +81,14 @@
   in {
     nixosConfigurations = {
       nixos = mkHost "nixos" [];
+    };
+
+    homeConfigurations."cozygalvinism@nixos" = home-manager.lib.homeManagerConfiguration {
+      pkgs = hmPkgs;
+      modules = [
+        hmCommon
+      ];
+      extraSpecialArgs = commonArgs // { hostName = "nixos"; };
     };
   };
 }

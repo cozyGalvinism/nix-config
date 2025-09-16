@@ -34,6 +34,8 @@
     deadbeef
   ];
 
+  programs.home-manager.enable = true;
+
   fonts.fontconfig.enable = true;
 
   programs.vesktop = {
@@ -120,6 +122,7 @@
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       cursor-theme = "Adwaita";
+      icon-theme = "Adwaita";
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
