@@ -1,5 +1,5 @@
 {
-  description = "a system config";
+  description = "cozy's absolutely amazing system config for nixos";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -15,19 +15,16 @@
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
     };
+    nixvim = { url = "github:nix-community/nixvim/nixos-25.05"; };
   };
 
   outputs = inputs@{ nixpkgs, unstable, nix-vscode-extensions, home-manager
-    , agenix, xrdriver, ... }:
+    , agenix, xrdriver, nixvim, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       commonArgs = { inherit system inputs; };
       defaultOverlays = import ./overlays;
-
-      hmCommon = { ... }: {
-        imports = [ ./home.nix inputs.agenix.homeManagerModules.default ];
-      };
 
       hmPkgs = import nixpkgs {
         inherit system;
@@ -44,6 +41,14 @@
         ];
       };
 
+      hmCommon = { ... }: {
+        imports = [
+          ./home.nix
+          inputs.agenix.homeManagerModules.default
+          inputs.nixvim.homeModules.nixvim
+        ];
+      };
+
       mkHost = hostName: extraModules:
         lib.nixosSystem {
           inherit system;
@@ -52,16 +57,19 @@
             ./hosts/${hostName}
 
             ({ ... }: {
-              nixpkgs.overlays = [
-                defaultOverlays
-                nix-vscode-extensions.overlays.default
-                (final: prev: {
-                  unstable = import inputs.unstable {
-                    system = prev.stdenv.hostPlatform.system;
-                    config = prev.config;
-                  };
-                })
-              ];
+              nixpkgs = {
+                config.allowUnfree = true;
+                overlays = [
+                  defaultOverlays
+                  nix-vscode-extensions.overlays.default
+                  (final: prev: {
+                    unstable = import inputs.unstable {
+                      system = prev.stdenv.hostPlatform.system;
+                      config = prev.config;
+                    };
+                  })
+                ];
+              };
             })
 
             home-manager.nixosModules.home-manager

@@ -18,6 +18,7 @@
   home.packages = with pkgs; [
     gnome-tweaks
     kitty
+    wezterm
     unstable.windsurf
     procps
     starship

@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.unstable.zed-editor;
     extensions = [ "nix" ];
-    extraPackages = with pkgs; [ nixd nixfmt-rfc-style unstable.rust-analyzer  ];
+    extraPackages = with pkgs; [ nixd nixfmt-rfc-style unstable.rust-analyzer ];
     userSettings = {
       vim_mode = true;
       buffer_font_size = 14;

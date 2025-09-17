@@ -9,6 +9,7 @@
       ssh.enable = true;
       gpg.enable = true;
     };
+    nix.allowUnfree = true;
   };
 
   environment.systemPackages = with pkgs; [
