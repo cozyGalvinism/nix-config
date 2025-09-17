@@ -1,1 +1,1 @@
-{ imports = [ ./fish.nix ./windsurf.nix ./ssh.nix ]; }
+{ imports = [ ./fish.nix ./windsurf.nix ./ssh.nix ./zed.nix ]; }
