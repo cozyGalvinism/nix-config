@@ -1,9 +1,1 @@
-{
-  imports = [
-    ./core
-    ./desktop
-    ./security
-    ./virtualization
-    ./users.nix
-  ];
-}
+{ imports = [ ./core ./desktop ./security ./virtualization ./users.nix ]; }

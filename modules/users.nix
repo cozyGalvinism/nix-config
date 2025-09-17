@@ -7,11 +7,7 @@ let
     name = "cozygalvinism";
     description = "Default User";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      git
-      gnupg
-      pinentry-gnome3
-    ];
+    packages = with pkgs; [ git gnupg pinentry-gnome3 ];
     desktopEnvironment = "gnome";
   };
 
@@ -27,11 +23,9 @@ let
 in {
   options.user = mkOption {
     type = types.attrsOf types.anything;
-    default = {};
+    default = { };
     description = "User configuration";
   };
 
-  config = mkIf (config.user != {}) (
-    mkUser (mergeUserConfig config.user)
-  );
+  config = mkIf (config.user != { }) (mkUser (mergeUserConfig config.user));
 }

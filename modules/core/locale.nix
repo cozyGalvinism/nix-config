@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.cozyConfig.locale;
+let cfg = config.cozyConfig.locale;
 in {
   options.cozyConfig.locale = {
     timeZone = mkOption {

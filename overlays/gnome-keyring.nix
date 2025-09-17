@@ -1,7 +1,6 @@
 final: prev: {
   gnome-keyring = prev.gnome-keyring.overrideAttrs (oldAttrs: {
-    mesonFlags = (builtins.filter (flag: flag != "-Dssh-agent=true") (oldAttrs.mesonFlags or [])) ++ [
-      "-Dssh-agent=false"
-    ];
+    mesonFlags = (builtins.filter (flag: flag != "-Dssh-agent=true")
+      (oldAttrs.mesonFlags or [ ])) ++ [ "-Dssh-agent=false" ];
   });
 }

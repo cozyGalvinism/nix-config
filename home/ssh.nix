@@ -4,13 +4,9 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
-      "github.com" = {
-        user = "git";
-      };
+      "github.com" = { user = "git"; };
 
-      "git.hadron.eu.com" = {
-        user = "git";
-      };
+      "git.hadron.eu.com" = { user = "git"; };
     };
   };
 }

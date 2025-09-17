@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.cozyConfig.security.gpg;
+let cfg = config.cozyConfig.security.gpg;
 in {
   options.cozyConfig.security.gpg = {
     enable = mkEnableOption "Enable GPG configuration";
@@ -28,11 +27,7 @@ in {
 
     extraPackages = mkOption {
       type = types.listOf types.package;
-      default = with pkgs; [
-        gnupg
-        yubikey-manager
-        yubikey-personalization
-      ];
+      default = with pkgs; [ gnupg yubikey-manager yubikey-personalization ];
       description = "Extra packages to install";
     };
   };

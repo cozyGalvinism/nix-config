@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.cozyConfig.desktop.gnome;
+let cfg = config.cozyConfig.desktop.gnome;
 in {
   options.cozyConfig.desktop.gnome = {
     enable = mkEnableOption "Enable GNOME desktop environment";

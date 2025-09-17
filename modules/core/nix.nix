@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.cozyConfig.nix;
+let cfg = config.cozyConfig.nix;
 in {
   options.cozyConfig.nix = {
     enableFlakes = mkOption {
@@ -14,7 +13,7 @@ in {
 
     extraExperimentalFeatures = mkOption {
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
       description = "Extra experimental features to enable";
     };
 
@@ -28,6 +27,7 @@ in {
   config = {
     nixpkgs.config.allowUnfree = cfg.allowUnfree;
     nix.settings.experimental-features =
-      (if cfg.enableFlakes then ["nix-command" "flakes"] else []) ++ cfg.extraExperimentalFeatures;
+      (if cfg.enableFlakes then [ "nix-command" "flakes" ] else [ ])
+      ++ cfg.extraExperimentalFeatures;
   };
 }

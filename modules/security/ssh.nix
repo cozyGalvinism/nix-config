@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.cozyConfig.security.ssh;
+let cfg = config.cozyConfig.security.ssh;
 in {
   options.cozyConfig.security.ssh = {
     enable = mkEnableOption "Enable SSH configuration";
@@ -22,17 +21,14 @@ in {
 
     extraConfig = mkOption {
       type = types.attrs;
-      default = {};
+      default = { };
       description = "Extra SSH server configuration";
     };
   };
 
   config = mkIf cfg.enable {
-    services.openssh = mkIf cfg.enableServer (
-      {
-        enable = true;
-      } // cfg.extraConfig
-    );
+    services.openssh =
+      mkIf cfg.enableServer ({ enable = true; } // cfg.extraConfig);
 
     programs.ssh.startAgent = cfg.startAgent;
   };

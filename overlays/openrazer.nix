@@ -1,4 +1,4 @@
-final: prev: 
+final: prev:
 let
   src = prev.fetchFromGitHub {
     owner = "openrazer";

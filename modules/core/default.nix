@@ -1,6 +1,1 @@
-{
-  imports = [
-    ./locale.nix
-    ./nix.nix
-  ];
-}
+{ imports = [ ./locale.nix ./nix.nix ]; }
