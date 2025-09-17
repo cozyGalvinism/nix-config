@@ -1,9 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  imports = [
-    ./home
-  ];
+  imports = [ ./home ];
 
   home.username = "cozygalvinism";
   home.homeDirectory = "/home/cozygalvinism";
@@ -16,7 +14,7 @@
       Hidden=true
     '';
   };
-  
+
   home.packages = with pkgs; [
     gnome-tweaks
     kitty
@@ -36,9 +34,12 @@
 
   fonts.fontconfig.enable = true;
 
-  programs.vesktop = {
+  programs.direnv = {
     enable = true;
+    nix-direnv.enable = true;
   };
+
+  programs.vesktop = { enable = true; };
 
   programs.starship = {
     enable = true;
@@ -74,9 +75,7 @@
       key = "0x958546AA073FAA66";
       signByDefault = true;
     };
-    extraConfig = {
-      init.defaultBranch = "develop";
-    };
+    extraConfig = { init.defaultBranch = "develop"; };
   };
 
   programs.gpg = {
@@ -88,20 +87,17 @@
       "require-cross-certification" = "";
       "personal-digest-preferences" = "SHA512 SHA384 SHA256";
       "cert-digest-algo" = "SHA512";
-      "default-preference-list" = "SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP";
+      "default-preference-list" =
+        "SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP";
       "use-agent" = "";
       "no-emit-version" = "";
       "no-comments" = "";
     };
-    scdaemonSettings = {
-      disable-ccid = true;
-    };
-    publicKeys = [
-      {
-        source = ./keys/cozy.asc;
-        trust = "ultimate";
-      }
-    ];
+    scdaemonSettings = { disable-ccid = true; };
+    publicKeys = [{
+      source = ./keys/cozy.asc;
+      trust = "ultimate";
+    }];
   };
 
   services.gpg-agent = {
@@ -110,9 +106,7 @@
     enableSshSupport = true;
     enableScDaemon = true;
     pinentry.package = pkgs.pinentry-gnome3;
-    sshKeys = [
-      "FE6F161F1D9FEF2532F743054696F4C9FEEF6549"
-    ];
+    sshKeys = [ "FE6F161F1D9FEF2532F743054696F4C9FEEF6549" ];
   };
 
   dconf.enable = true;
@@ -127,11 +121,12 @@
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
       ];
     };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      name = "Open Kitty";
-      command = "kitty";
-      binding = "<Primary><Alt>T";
-    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
+      {
+        name = "Open Kitty";
+        command = "kitty";
+        binding = "<Primary><Alt>T";
+      };
 
     "org/gnome/shell" = {
       disable-user-extensions = false;
@@ -148,11 +143,7 @@
     };
   };
 
-  age = {
-    identityPaths = [
-      "${config.home.homeDirectory}/.ssh/id_ed25519"
-    ];
-  };
+  age = { identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ]; };
 
   home.stateVersion = "25.05";
 }

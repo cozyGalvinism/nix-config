@@ -1,36 +1,24 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
-  imports = [
-    ../.
-    ./hardware-configuration.nix
-  ];
+  imports = [ ../. ./hardware-configuration.nix ];
 
   networking.hostName = "nixos";
 
-  environment.systemPackages = with pkgs; [
-    displaylink
-  ];
+  environment.systemPackages = with pkgs; [ displaylink ];
 
-  services.xserver.videoDrivers = [
-    "displaylink"
-  ];
+  services.xserver.videoDrivers = [ "displaylink" ];
   systemd.services.dlm.wantedBy = [ "multi-user.target" ];
 
   boot = {
+    kernelParams = [ "usbcore.autosuspend=-1" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
 
-    extraModulePackages = [
-      config.boot.kernelPackages.evdi
-    ];
-    initrd = {
-      kernelModules = [
-        "evdi"
-      ];
-    };
+    extraModulePackages = [ config.boot.kernelPackages.evdi ];
+    initrd = { kernelModules = [ "evdi" ]; };
   };
 
   # System version

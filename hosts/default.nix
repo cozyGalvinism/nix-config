@@ -1,9 +1,7 @@
-{ config, pkgs, lib, inputs, hostName, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  imports = [
-    ../modules
-  ];
+  imports = [ ../modules ];
 
   cozyConfig = {
     desktop.gnome.enable = true;
@@ -33,13 +31,17 @@
     allowedTCPPorts = [
       22 # SSH
     ];
-    allowedTCPPortRanges = [
-      { from = 1714; to = 1764; } # KDE Connect/GSConnect
-    ];
+    allowedTCPPortRanges = [{
+      from = 1714;
+      to = 1764;
+    } # KDE Connect/GSConnect
+      ];
 
-    allowedUDPPortRanges = [
-      { from = 1714; to = 1764; } # KDE Connect/GSConnect
-    ];
+    allowedUDPPortRanges = [{
+      from = 1714;
+      to = 1764;
+    } # KDE Connect/GSConnect
+      ];
   };
 
   user = {
@@ -55,23 +57,17 @@
     ];
   };
 
-  environment.variables = {
-    EDITOR = "nano";
-  };
+  environment.variables = { EDITOR = "nano"; };
 
   # Fonts
-  fonts.packages = with pkgs; [
-    nerd-fonts.caskaydia-cove
-  ];
+  fonts.packages = with pkgs; [ nerd-fonts.caskaydia-cove ];
 
   # Programs
   programs.firefox.enable = true;
 
   programs.evolution = {
     enable = true;
-    plugins = [
-      pkgs.evolution-ews
-    ];
+    plugins = [ pkgs.evolution-ews ];
   };
   services.gnome.evolution-data-server.enable = true;
 

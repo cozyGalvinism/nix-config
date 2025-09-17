@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
@@ -7,14 +7,18 @@
       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
     '';
 
-    shellAliases = {
-      hm = "home-manager";
-    };
+    shellAliases = { hm = "home-manager"; };
     generateCompletions = true;
 
     plugins = [
-      { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
-      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+      {
+        name = "plugin-git";
+        src = pkgs.fishPlugins.plugin-git.src;
+      }
+      {
+        name = "fzf-fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
       {
         name = "odoo.fish";
         src = pkgs.fetchFromGitHub {
