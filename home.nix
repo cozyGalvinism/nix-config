@@ -31,6 +31,8 @@
     bun
     nodejs
     deadbeef
+    remmina
+    freerdp
   ];
 
   fonts.fontconfig.enable = true;
