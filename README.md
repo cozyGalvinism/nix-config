@@ -1,5 +1,7 @@
 # NixOS Configuration (Private)
 
+**NOTE**: This README is not regularly updated!
+
 This repository contains my personal NixOS and Home Manager configuration, using flakes and agenix for secret management.
 
 Key files and directories:
