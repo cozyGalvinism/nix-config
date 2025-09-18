@@ -23,6 +23,7 @@
     age-plugin-yubikey
     polychromatic
     home-manager
+    fd
   ];
 
   networking.networkmanager.enable = true;
