@@ -112,6 +112,9 @@
 
   dconf.enable = true;
   dconf.settings = {
+    "org/gnome/Console" = {
+      custom-font = "CaskaydiaCove Nerd Font 10";
+    };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       cursor-theme = "Adwaita";
@@ -124,8 +127,8 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
       {
-        name = "Open Kitty";
-        command = "kitty";
+        name = "Open Terminal";
+        command = "${pkgs.gnome-console}/bin/gnome-console";
         binding = "<Primary><Alt>T";
       };
 
