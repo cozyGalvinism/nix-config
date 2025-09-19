@@ -7,6 +7,4 @@ in {
   "BONM.key.age".publicKeys = [ machines.nixtop ];
   "BONM.userpass.age".publicKeys = [ machines.nixtop ];
   "BONM.ovpn.age".publicKeys = [ machines.nixtop ];
-  "codestats.apikey.age".publicKeys = [ machines.nixtop ];
-  "wakatime.apikey.age".publicKeys = [ machines.nixtop ];
 }
