@@ -19,31 +19,6 @@ The configuration integrates Home Manager through the NixOS module and uses `gpg
 
 ---
 
-## Prerequisite: Bootstrap age identity (required)
-
-To use this repository as a system configuration on a machine, first bootstrap the age-plugin-yubikey identity using the flake at `bootstrap/flake.nix`.
-
-From the repo root on the target machine:
-
-```bash
-# See usage/help
-nix run ./bootstrap -- --help
-
-# Typical run (writes identity to /var/lib/age-identities/yubikey.txt)
-nix run ./bootstrap
-```
-
-Notes:
-- The app is named `bootstrap-yubikey-age` and is exposed as the default app; you can also run `nix run ./bootstrap#bootstrap-yubikey-age`.
-- You can override destination and mode, or force overwrite:
-  ```bash
-  nix run ./bootstrap -- --dest /var/lib/age-identities/yubikey.txt --mode 0444 --force
-  ```
-- This step ensures secrets managed by `agenix` can be decrypted on the system.
-- If you want to use a different Yubikey identity, you will need to re-run the bootstrap script with the `--force` flag and the other Yubikey inserted.
-
----
-
 ## Day-to-day commands
 
 All commands assume you are in the repo root.
