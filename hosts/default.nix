@@ -12,6 +12,12 @@
     nix.allowUnfree = true;
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
   environment.systemPackages = with pkgs; [
     git
     inputs.agenix.packages."${pkgs.system}".default
